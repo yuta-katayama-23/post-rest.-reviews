@@ -5,6 +5,11 @@
 	"repository": "git@github.com:yuta-katayama-23/post-restaurant-reviews.git",
 	"author": "yuta-katayama-23",
 	"license": "MIT",
+	"dependencies": {
+		"app-root-path": "^3.0.0",
+		"ejs": "^3.1.6",
+		"express": "^4.17.2"
+	},
 	"devDependencies": {
 		"@babel/core": "^7.16.0",
 		"@babel/preset-env": "^7.16.4",
