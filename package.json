@@ -1,0 +1,36 @@
+{
+	"name": "post-restaurant-reviews",
+	"version": "1.0.0",
+	"main": "app.js",
+	"repository": "git@github.com:yuta-katayama-23/post-restaurant-reviews.git",
+	"author": "yuta-katayama-23",
+	"license": "MIT",
+	"devDependencies": {
+		"@babel/core": "^7.16.0",
+		"@babel/preset-env": "^7.16.4",
+		"babel-loader": "^8.2.3",
+		"core-js": "^3.19.2",
+		"eslint": "^8.4.0",
+		"eslint-config-airbnb-base": "^15.0.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-import": "^2.25.3",
+		"eslint-plugin-jest": "^25.3.0",
+		"eslint-plugin-prettier": "^4.0.0",
+		"eslint-webpack-plugin": "^3.1.1",
+		"jest": "^27.4.5",
+		"nodemon": "^2.0.15",
+		"prettier": "^2.5.1",
+		"regenerator-runtime": "^0.13.9",
+		"webpack": "^5.64.4",
+		"webpack-cli": "^4.9.1",
+		"webpack-node-externals": "^3.0.0"
+	},
+	"scripts": {
+		"build:dev": "webpack watch --node-env=development",
+		"build:prod": "webpack --node-env=production",
+		"build:debug": "webpack --node-env=development",
+		"start:watch": "nodemon dist/app.js",
+		"lint": "eslint src/*",
+		"test": "jest"
+	}
+}
