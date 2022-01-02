@@ -1,7 +1,10 @@
+import 'source-map-support/register';
 import express from 'express';
 import appRoot from 'app-root-path';
 import favicon from 'serve-favicon';
 import router from './routes/index';
+import { AppLogger } from './lib/logger';
+import applicationLogger from './lib/application-logger';
 
 const port = process.env.PORT;
 const app = express();
@@ -15,6 +18,8 @@ app.use('/public', express.static(appRoot.resolve('src/public')));
 
 app.use('/', router);
 
+app.use(applicationLogger());
+
 app.listen(port, () => {
-	console.log(`Application listening at ${port}`);
+	AppLogger.info(`Application listening at ${port}`);
 });
