@@ -9,7 +9,22 @@
 	<body>
 		<div class="area h-100 w-100">
 			<%- include("./share/navbar.ejs") %>
-			<h1>Hello World !</h1>
+			<main class="container justify-content-center">
+				<div class="col-8 align-self-center">
+					<h1 class="display-1 text-center my-5">
+						<i class="fa fa-fw fa-utensils"></i>
+						検索
+					</h1>
+					<div class="input-group">
+						<input type="text" class="form-control" autofocus="autofocus" />
+						<div class="input-group-append">
+							<button class="btn btn-secondary" type="submit">
+								<i class="fa fa-fw fa-search"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</main>
 			<%- include("./share/footer.ejs") %>
 		</div>
 		<%- include("./share/javascripts.ejs") %>
