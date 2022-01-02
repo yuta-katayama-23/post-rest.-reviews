@@ -1,0 +1,27 @@
+html,
+body {
+	height: 100%;
+}
+.area {
+	position: relative;
+}
+.area nav {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+}
+.area main {
+	display: flex;
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
+.area footer {
+	position: absolute;
+	right: 0;
+	left: 0;
+	bottom: 0;
+}
