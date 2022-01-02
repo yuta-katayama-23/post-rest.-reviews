@@ -8,6 +8,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', appRoot.resolve('src/views'));
+app.disable('x-powered-by');
 
 app.use(favicon(appRoot.resolve('src/public/favicon.ico')));
 app.use('/public', express.static(appRoot.resolve('src/public')));
