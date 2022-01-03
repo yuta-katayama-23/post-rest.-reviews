@@ -12,6 +12,13 @@ export default {
 			pattern: 'yyyyMMdd',
 			keepFileExt: true,
 			daysToKeep: 7
+		},
+		access: {
+			type: 'dateFile',
+			filename: path.join(LOG_ROOT_DIR, './access.log'),
+			pattern: 'yyyyMMdd',
+			keepFileExt: true,
+			daysToKeep: 7
 		}
 	},
 	categories: {
@@ -21,6 +28,10 @@ export default {
 		},
 		application: {
 			appenders: ['console', 'application'],
+			level: 'INFO'
+		},
+		access: {
+			appenders: ['console', 'access'],
 			level: 'INFO'
 		}
 	}

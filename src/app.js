@@ -5,6 +5,7 @@ import favicon from 'serve-favicon';
 import router from './routes/index';
 import { AppLogger } from './lib/logger';
 import applicationLogger from './lib/application-logger';
+import accessLogger from './lib/access-logger';
 
 const port = process.env.PORT;
 const app = express();
@@ -15,6 +16,8 @@ app.disable('x-powered-by');
 
 app.use(favicon(appRoot.resolve('src/public/favicon.ico')));
 app.use('/public', express.static(appRoot.resolve('src/public')));
+
+app.use(accessLogger());
 
 app.use('/', router);
 
