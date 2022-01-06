@@ -2,6 +2,8 @@ import 'source-map-support/register';
 import express from 'express';
 import appRoot from 'app-root-path';
 import favicon from 'serve-favicon';
+import mysql from 'mysql2/promise';
+import config from 'config';
 import router from './routes/index';
 import { AppLogger } from './lib/logger';
 import applicationLogger from './lib/application-logger';
@@ -20,6 +22,22 @@ app.use('/public', express.static(appRoot.resolve('src/public')));
 app.use(accessLogger());
 
 app.use('/', router);
+
+app.use('/test', async (req, res, next) => {
+	const connect = await mysql.createConnection(config.get('mysql'));
+
+	try {
+		await connect.connect();
+		const data = await connect.query('SELECT * FROM tran_shops WHERE id = 1');
+		console.log(data);
+	} catch (err) {
+		next(err);
+	} finally {
+		await connect.end();
+	}
+
+	res.end('OK');
+});
 
 app.use(applicationLogger());
 

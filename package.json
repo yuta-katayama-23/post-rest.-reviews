@@ -7,9 +7,11 @@
 	"license": "MIT",
 	"dependencies": {
 		"app-root-path": "^3.0.0",
+		"config": "^3.3.6",
 		"ejs": "^3.1.6",
 		"express": "^4.17.2",
 		"log4js": "^6.3.0",
+		"mysql2": "^2.3.3",
 		"serve-favicon": "^2.5.0",
 		"source-map-support": "^0.5.21"
 	},
@@ -39,6 +41,9 @@
 		"build:debug": "webpack --node-env=development",
 		"start:watch": "nodemon dist/app.js",
 		"lint": "eslint src/*",
-		"test": "jest"
+		"test": "jest",
+		"mysqldump:full": "docker exec -t mysql mysqldump -u root --databases post-restaurant-reviews > ./sql/full.sql",
+		"mysqldump:schema": "docker exec -t mysql mysqldump -u root --databases post-restaurant-reviews --no-data | sed -e 's/ AUTO_INCREMENT=[0-9]*//' > ./sql/1_schema.sql",
+		"mysqldump:data": "docker exec -t mysql mysqldump -u root -t --databases post-restaurant-reviews --no-create-db > ./sql/2_data.sql"
 	}
 }
