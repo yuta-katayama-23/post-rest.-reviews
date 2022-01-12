@@ -5,9 +5,10 @@ import favicon from 'serve-favicon';
 import mysql from 'mysql2/promise';
 import config from 'config';
 import router from './routes/index';
-import { AppLogger } from './lib/logger';
-import applicationLogger from './lib/application-logger';
-import accessLogger from './lib/access-logger';
+import { AppLogger } from './lib/logger/logger';
+import applicationLogger from './lib/logger/application-logger';
+import accessLogger from './lib/logger/access-logger';
+import SqlQueryLoader from './lib/database/sql-query-loader';
 
 const port = process.env.PORT;
 const app = express();
@@ -24,11 +25,13 @@ app.use(accessLogger());
 app.use('/', router);
 
 app.use('/test', async (req, res, next) => {
+	const queryLoader = new SqlQueryLoader({ path: 'src/lib/database/sqls' });
 	const connect = await mysql.createConnection(config.get('mysql'));
 
 	try {
 		await connect.connect();
-		const data = await connect.query('SELECT * FROM tran_shops WHERE id = 1');
+		const query = queryLoader.sqlSync('tran_shops', 'SELECT_SHOP_BASIC_BY_ID');
+		const data = await connect.query(query);
 		console.log(data);
 	} catch (err) {
 		next(err);
