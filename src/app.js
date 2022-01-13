@@ -27,7 +27,8 @@ app.use('/test', async (req, res, next) => {
 	try {
 		await client.connect();
 		const data = await client.query(
-			loader.sqlSync('tran_shops', 'SELECT_SHOP_BASIC_BY_ID')
+			loader.sqlSync('tran_shops', 'SELECT_SHOP_BASIC_BY_ID'),
+			[1]
 		);
 		console.log(data);
 	} catch (err) {
