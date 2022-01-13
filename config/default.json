@@ -4,6 +4,8 @@
 		"port": "3306",
 		"user": "root",
 		"password": "",
-		"database": "post-restaurant-reviews"
+		"database": "post-restaurant-reviews",
+		"connectionLimit": 10,
+		"queueLimit": 0
 	}
 }

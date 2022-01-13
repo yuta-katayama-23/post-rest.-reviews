@@ -6,7 +6,7 @@ import router from './routes/index';
 import { AppLogger } from './lib/logger/logger';
 import applicationLogger from './lib/logger/application-logger';
 import accessLogger from './lib/logger/access-logger';
-import { MySQLClient, loader } from './lib/database/client';
+import { executeQuery, loader } from './lib/database/client';
 
 const port = process.env.PORT;
 const app = express();
@@ -23,18 +23,14 @@ app.use(accessLogger());
 app.use('/', router);
 
 app.use('/test', async (req, res, next) => {
-	const client = await MySQLClient();
 	try {
-		await client.connect();
-		const data = await client.query(
+		const data = await executeQuery(
 			loader.sqlSync('tran_shops', 'SELECT_SHOP_BASIC_BY_ID'),
 			[1]
 		);
 		console.log(data);
 	} catch (err) {
 		next(err);
-	} finally {
-		await client.end();
 	}
 
 	res.end('OK');

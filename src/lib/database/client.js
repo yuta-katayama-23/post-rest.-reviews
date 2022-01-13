@@ -1,11 +1,12 @@
-import mysql from 'mysql2/promise';
-import config from 'config';
 import SqlQueryLoader from './sql-query-loader';
+import pool from './pool';
 
-export const MySQLClient = async () => {
-	const connection = await mysql.createConnection(config.get('mysql'));
-	return connection;
+const executeQuery = async (query = '', values = []) => {
+	const results = await pool.query(query, values);
+	return results;
 };
-export const loader = new SqlQueryLoader({
+const loader = new SqlQueryLoader({
 	path: 'src/lib/database/sqls'
 });
+
+export { executeQuery, loader };
