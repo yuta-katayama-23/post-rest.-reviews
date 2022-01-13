@@ -9,7 +9,7 @@ export default class SqlQueryLoader {
 		this.sqlFileDir = options.path;
 	}
 
-	sqlSync(table, name) {
+	readSync(table, name) {
 		if (cache[name]) {
 			return cache[name];
 		}

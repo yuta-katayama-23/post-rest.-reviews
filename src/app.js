@@ -6,7 +6,7 @@ import router from './routes/index';
 import { AppLogger } from './lib/logger/logger';
 import applicationLogger from './lib/logger/application-logger';
 import accessLogger from './lib/logger/access-logger';
-import { executeQuery, loader } from './lib/database/client';
+import mysqlClient from './lib/database/client';
 
 const port = process.env.PORT;
 const app = express();
@@ -18,14 +18,18 @@ app.disable('x-powered-by');
 app.use(favicon(appRoot.resolve('src/public/favicon.ico')));
 app.use('/public', express.static(appRoot.resolve('src/public')));
 
+mysqlClient(app);
+
 app.use(accessLogger());
 
 app.use('/', router);
 
 app.use('/test', async (req, res, next) => {
+	const { pool, fsSql } = req.app.locals;
+
 	try {
-		const data = await executeQuery(
-			loader.sqlSync('tran_shops', 'SELECT_SHOP_BASIC_BY_ID'),
+		const data = await pool.query(
+			fsSql.readSync('tran_shops', 'SELECT_SHOP_BASIC_BY_ID'),
 			[1]
 		);
 		console.log(data);
