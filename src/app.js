@@ -4,6 +4,7 @@ import appRoot from 'app-root-path';
 import favicon from 'serve-favicon';
 import moment from 'moment';
 import router from './routes/index';
+import shopsRouter from './routes/shops';
 import { AppLogger } from './lib/logger/logger';
 import applicationLogger from './lib/logger/application-logger';
 import accessLogger from './lib/logger/access-logger';
@@ -30,22 +31,7 @@ app.use('/public', express.static(appRoot.resolve('src/public')));
 app.use(accessLogger());
 
 app.use('/', router);
-
-app.use('/test', async (req, res, next) => {
-	const { pool, fsSql } = req.app.locals;
-
-	try {
-		const data = await pool.query(
-			fsSql.readSync('tran_shops', 'SELECT_SHOP_BASIC_BY_ID'),
-			[1]
-		);
-		console.log(data);
-	} catch (err) {
-		next(err);
-	}
-
-	res.end('OK');
-});
+app.use('/shops', shopsRouter);
 
 app.use(applicationLogger());
 

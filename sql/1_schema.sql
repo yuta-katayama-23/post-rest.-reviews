@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: post-restaurant-reviews
 -- ------------------------------------------------------
--- Server version	5.7.36-log
+-- Server version	5.7.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -22,6 +22,34 @@
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `post-restaurant-reviews` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
 USE `post-restaurant-reviews`;
+
+--
+-- Table structure for table `mst_shop_category`
+--
+
+DROP TABLE IF EXISTS `mst_shop_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mst_shop_category` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tran_shop_categorys`
+--
+
+DROP TABLE IF EXISTS `tran_shop_categorys`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tran_shop_categorys` (
+  `shop_id` int(10) NOT NULL,
+  `category_id` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `tran_shops`
@@ -49,4 +77,4 @@ CREATE TABLE `tran_shops` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-06 12:12:02
+-- Dump completed on 2022-01-14 12:56:41

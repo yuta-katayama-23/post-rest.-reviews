@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: post-restaurant-reviews
 -- ------------------------------------------------------
--- Server version	5.7.36-log
+-- Server version	5.7.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -20,6 +20,26 @@
 --
 
 USE `post-restaurant-reviews`;
+
+--
+-- Dumping data for table `mst_shop_category`
+--
+
+LOCK TABLES `mst_shop_category` WRITE;
+/*!40000 ALTER TABLE `mst_shop_category` DISABLE KEYS */;
+INSERT INTO `mst_shop_category` VALUES (1,'中華'),(2,'洋食');
+/*!40000 ALTER TABLE `mst_shop_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `tran_shop_categorys`
+--
+
+LOCK TABLES `tran_shop_categorys` WRITE;
+/*!40000 ALTER TABLE `tran_shop_categorys` DISABLE KEYS */;
+INSERT INTO `tran_shop_categorys` VALUES (1,1),(2,2);
+/*!40000 ALTER TABLE `tran_shop_categorys` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Dumping data for table `tran_shops`
@@ -40,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-06 12:12:04
+-- Dump completed on 2022-01-14 12:56:46
