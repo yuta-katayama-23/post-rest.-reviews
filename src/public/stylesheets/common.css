@@ -25,3 +25,16 @@ body {
 	left: 0;
 	bottom: 0;
 }
+.rate-star {
+	color: transparent;
+	background-image: linear-gradient(#ffcc33, #ffcc33),
+		linear-gradient(#cccccc, #cccccc);
+	background-position: left, right;
+	background-repeat: no-repeat;
+	background-size: var(--rate) 100%, calc(100% - var(--rate)) 100%;
+	background-clip: text;
+	-webkit-background-clip: text;
+}
+.rate-star:before {
+	content: '★★★★★';
+}

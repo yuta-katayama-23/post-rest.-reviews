@@ -3,8 +3,91 @@
 	<head>
 		<%- include("../share/metadata.ejs") %>
 		<title>Document</title>
+		<%- include("../share/stylesheets.ejs") %>
+		<link rel="icon" href="favicon.ico?v=1.1" />
 	</head>
 	<body>
-		<%- name %> <%- categories %>
+		<div class="area w-100">
+			<%- include("../share/navbar.ejs") %>
+			<main class="container justify-content-center mt-5">
+				<div class="row">
+					<div class="col-12">
+						<div class="border-bottom my-3">
+							<h1><%= locals.name %></h1>
+							<p class="h3">
+								<span
+									class="rate-star"
+									style="--rate: <%= (locals.score/5) * 100 %>%"
+								></span>
+								<span><%= locals.padding(locals.score) %></span>
+							</p>
+						</div>
+					</div>
+					<div class="text-center">
+						<img class="img-fluid" src="../../public/image/star.png" />
+					</div>
+					<div class="col-12 col-md-8">
+						<div>
+							<h2 class="border-bottom my-3 pb-2">
+								<i class="fa fa-fw fa-book"></i> 店舗情報
+							</h2>
+							<table class="table table-bordered">
+								<colgroup>
+									<col class="bg-light" style="width: 10rem" />
+									<col />
+								</colgroup>
+								<tr>
+									<th>店名</th>
+									<td><%= locals.name %></td>
+								</tr>
+								<tr>
+									<th>カテゴリー</th>
+									<td><%= locals.categories %></td>
+								</tr>
+								<tr>
+									<th>電話</th>
+									<td><%= locals.tel %></td>
+								</tr>
+								<tr>
+									<th>住所</th>
+									<td>
+										<div><%= locals.address %></div>
+										<div id="mapid"></div>
+									</td>
+								</tr>
+								<tr>
+									<th>価格帯</th>
+									<td><%= locals.price_range %></td>
+								</tr>
+							</table>
+						</div>
+						<div class="border-bottom my-3">
+							<div class="row">
+								<div class="col-8">
+									<h2><i class="fa fa-fw fa-comments"></i> 口コミ</h2>
+								</div>
+								<div class="col-4">
+									<div class="mb-2 d-flex justify-content-end">
+										<button class="btn btn-outline-success d-none d-md-block">
+											投稿する
+										</button>
+										<button class="btn btn-outline-success d-sm-none btn-sm">
+											投稿する
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-4">
+						<h2 class="border-bottom my-3 pb-2">
+							<i class="fa fa-fw fa-heart"></i> おススメのお店
+						</h2>
+					</div>
+				</div>
+			</main>
+			<%- include("../share/footer.ejs") %>
+		</div>
+		<%- include("../share/javascripts.ejs") %>
 	</body>
 </html>

@@ -1,10 +1,10 @@
-import { roundTo } from 'round-to';
+import roundTo from 'round-to';
 
 const padding = (value) => {
 	if (Number.isNaN(value)) {
 		return '-';
 	}
-	return roundTo(value, 2).toPrecision(3);
+	return roundTo(Number(value), 2).toPrecision(3);
 };
 
 const round = (value) => {

@@ -10,6 +10,10 @@
 SELECT
   shop_category.id,
   shop_category.name,
+  shop_category.tel,
+  shop_category.address,
+  shop_category.score,
+  shop_category.price_range,
   GROUP_CONCAT(mst_shop_category.name separator ', ') as categories
 FROM
 (
