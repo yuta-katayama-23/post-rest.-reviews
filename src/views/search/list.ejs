@@ -6,8 +6,54 @@
 		<%- include("../share/stylesheets.ejs") %>
 	</head>
 	<body>
-		<main>
-			<% for (let shop of shops) { %> <%- JSON.stringify(shop) %> <% } %>
-		</main>
+		<div class="d-flex flex-column h-100">
+			<header><%- include("../share/navbar.ejs") %></header>
+			<main class="container">
+				<div class="row">
+					<div class="col-12">
+						<div class="border-bottom d-flex justify-content-center">
+							<div class="col-8 my-5">
+								<form action="/search" method="GET">
+									<div class="form-group">
+										<div class="input-group">
+											<input
+												type="text"
+												class="form-control"
+												id="keyword"
+												name="keyword"
+												value="<%= keyword %>"
+												autofocus="autofocus"
+											/>
+											<div class="input-group-append">
+												<button class="btn btn-secondary" type="submit">
+													<i class="fa fa-fw fa-search"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12">
+						<div class="row row-cols-1 row-cols-md-3 g-4 my-3">
+							<% for (var shop of shops) { %> <%- include("./item.ejs", shop) %>
+							<% } %>
+						</div>
+					</div>
+
+					<div class="col-12">
+						<nav class="my-3">
+							<ul class="pagination justify-content-center"></ul>
+						</nav>
+					</div>
+				</div>
+			</main>
+			<footer class="footer bg-light text-muted mt-auto">
+				<%- include("../share/footer.ejs") %>
+			</footer>
+		</div>
+		<%- include("../share/javascripts.ejs") %>
 	</body>
 </html>

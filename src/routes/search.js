@@ -6,24 +6,27 @@ const MAX_ITEMS = 5;
 router.get('/', async (req, res, next) => {
 	const { pool, fsSql } = req.app.locals;
 	const keyword = req.query.keyword || '';
-	const data = {};
 
 	try {
+		let shops;
 		if (keyword) {
 			const [results] = await pool.query(
 				fsSql.readSync('tran_shops', 'SELECT_SHOP_LIST_BY_NAME'),
 				[`%${keyword}%`, MAX_ITEMS]
 			);
-			data.shops = results;
+			shops = results;
 		} else {
 			const [results] = await pool.query(
 				fsSql.readSync('tran_shops', 'SELECT_SHOP_HIGH_SCORE_LIST'),
 				[MAX_ITEMS]
 			);
-			data.shops = results;
+			shops = results;
 		}
 
-		res.render('./search/list.ejs', data);
+		res.render('./search/list.ejs', {
+			shops,
+			keyword
+		});
 	} catch (err) {
 		next(err);
 	}
