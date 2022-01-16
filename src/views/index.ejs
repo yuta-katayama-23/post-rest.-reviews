@@ -6,7 +6,7 @@
 		<%- include("./share/stylesheets.ejs") %>
 	</head>
 	<body>
-		<div class="d-flex flex-column h-100">
+		<div id="app" class="d-flex flex-column h-100">
 			<header><%- include("./share/navbar.ejs") %></header>
 			<main class="container align-items-center h-100">
 				<div class="row h-100 justify-content-center">
@@ -15,24 +15,19 @@
 							<i class="fa fa-fw fa-utensils"></i>
 							検索
 						</h1>
-						<form action="/search" method="GET">
-							<div class="form-group">
-								<div class="input-group">
-									<input
-										type="text"
-										class="form-control"
-										id="keyword"
-										name="keyword"
-										autofocus="autofocus"
-									/>
-									<div class="input-group-append">
-										<button class="btn btn-secondary" type="submit">
-											<i class="fa fa-fw fa-search"></i>
-										</button>
-									</div>
-								</div>
+						<div class="input-group">
+							<input
+								type="text"
+								class="form-control"
+								autofocus="autofocus"
+								v-model="keyword"
+							/>
+							<div class="input-group-append">
+								<button class="btn btn-secondary" @click="submit">
+									<i class="fa fa-fw fa-search"></i>
+								</button>
 							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 			</main>
@@ -41,5 +36,18 @@
 			</footer>
 		</div>
 		<%- include("./share/javascripts.ejs") %>
+		<script>
+			new Vue({
+				el: '#app',
+				data: () => ({
+					keyword: ''
+				}),
+				methods: {
+					submit() {
+						window.location = `/search?keyword=${this.keyword}`;
+					}
+				}
+			});
+		</script>
 	</body>
 </html>
