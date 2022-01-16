@@ -12,13 +12,13 @@
 				<div class="row h-100">
 					<div class="col-12">
 						<div class="border-bottom my-3">
-							<h1><%= locals.name %></h1>
+							<h1><%= name %></h1>
 							<p class="h3">
 								<span
 									class="rate-star"
-									style="--rate: <%= (locals.score/5) * 100 %>%"
+									style="--rate: <%= (score/5) * 100 %>%"
 								></span>
-								<span><%= locals.padding(locals.score) %></span>
+								<span><%= padding(score) %></span>
 							</p>
 						</div>
 					</div>
@@ -40,26 +40,26 @@
 								</colgroup>
 								<tr>
 									<th>店名</th>
-									<td><%= locals.name %></td>
+									<td><%= name %></td>
 								</tr>
 								<tr>
 									<th>カテゴリー</th>
-									<td><%= locals.categories %></td>
+									<td><%= categories %></td>
 								</tr>
 								<tr>
 									<th>電話</th>
-									<td><%= locals.tel %></td>
+									<td><%= tel %></td>
 								</tr>
 								<tr>
 									<th>住所</th>
 									<td>
-										<div><%= locals.address %></div>
+										<div><%= address %></div>
 										<div id="mapid"></div>
 									</td>
 								</tr>
 								<tr>
 									<th>価格帯</th>
-									<td><%= locals.price_range %></td>
+									<td><%= price_range %></td>
 								</tr>
 							</table>
 						</div>
@@ -75,6 +75,10 @@
 									</button>
 								</div>
 							</div>
+						</div>
+						<div>
+							<% for (let review of reviews) { %> <%-
+							include("./review.ejs",review) %> <% } %>
 						</div>
 					</div>
 					<div class="col-12 col-md-4">

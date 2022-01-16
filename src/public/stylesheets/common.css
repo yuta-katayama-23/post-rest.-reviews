@@ -13,6 +13,7 @@ body {
 	background-clip: text;
 	-webkit-background-clip: text;
 }
+
 .rate-star:before {
 	content: '★★★★★';
 }
