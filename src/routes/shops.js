@@ -7,11 +7,17 @@ router.get('/:id', async (req, res, next) => {
 	const { id } = req.params;
 
 	try {
-		const [rows] = await pool.query(
+		const [shopRows] = await pool.query(
 			fsSql.readSync('tran_shops', 'SELECT_SHOP_DETAIL_BY_ID'),
 			[id]
 		);
-		res.render('./shops/index.ejs', rows.shift());
+		const [reviewRows] = await pool.query(
+			fsSql.readSync('tran_shops', 'SELECT_SHOP_REVIEW_BY_SHOP_ID'),
+			[id]
+		);
+		const data = shopRows.shift();
+		data.reviews = reviewRows || [];
+		res.render('./shops/index.ejs', data);
 	} catch (err) {
 		next(err);
 	}

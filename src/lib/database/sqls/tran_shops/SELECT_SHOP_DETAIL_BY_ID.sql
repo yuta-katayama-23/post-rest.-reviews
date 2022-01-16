@@ -18,12 +18,19 @@ SELECT
 FROM
 (
   SELECT
-    *
+    id,
+    name,
+    tel,
+    address,
+    score,
+    price_range,
+    shop_id,
+    category_id
   FROM
     (
-      SELECT * FROM tran_shops WHERE id = ?
+      SELECT * FROM tran_shop WHERE id = ?
     ) as shop
-  LEFT JOIN tran_shop_categorys ON shop.id = tran_shop_categorys.shop_id
+  LEFT JOIN tran_shop_category ON shop.id = tran_shop_category.shop_id
 ) as shop_category
 LEFT JOIN mst_shop_category ON shop_category.category_id = mst_shop_category.id
 GROUP BY shop_category.id

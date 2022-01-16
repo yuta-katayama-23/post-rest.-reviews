@@ -33,38 +33,90 @@ DROP TABLE IF EXISTS `mst_shop_category`;
 CREATE TABLE `mst_shop_category` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  UNIQUE KEY `idx_category_id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `tran_shop_categorys`
+-- Table structure for table `tran_review`
 --
 
-DROP TABLE IF EXISTS `tran_shop_categorys`;
+DROP TABLE IF EXISTS `tran_review`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tran_shop_categorys` (
+CREATE TABLE `tran_review` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `shop_id` int(10) NOT NULL,
-  `category_id` int(10) NOT NULL
+  `user_id` int(10) NOT NULL,
+  `score` int(1) DEFAULT NULL,
+  `visit_date` datetime DEFAULT NULL,
+  `post_date` datetime DEFAULT NULL,
+  `description` longtext,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_review_id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `tran_shops`
+-- Table structure for table `tran_shop`
 --
 
-DROP TABLE IF EXISTS `tran_shops`;
+DROP TABLE IF EXISTS `tran_shop`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tran_shops` (
+CREATE TABLE `tran_shop` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(120) NOT NULL,
+  `tel` varchar(45) DEFAULT NULL,
+  `address` varchar(200) DEFAULT NULL,
+  `score` float DEFAULT NULL,
+  `price_range` varchar(20) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_shop_id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tran_shop_category`
+--
+
+DROP TABLE IF EXISTS `tran_shop_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tran_shop_category` (
+  `shop_id` int(10) NOT NULL,
+  `category_id` int(10) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `tran_user`
+--
+
+DROP TABLE IF EXISTS `tran_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tran_user` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(60) NOT NULL,
+  `description` varchar(1000) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `locked` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_user_id` (`id`),
+  UNIQUE KEY `idx_user_email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -77,4 +129,4 @@ CREATE TABLE `tran_shops` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-14 12:56:41
+-- Dump completed on 2022-01-16 14:27:12
