@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<%- include("../share/metadata.ejs") %>
+		<title>Shop List</title>
+		<%- include("../share/stylesheets.ejs") %>
+	</head>
+	<body>
+		<main>
+			<% for (let shop of shops) { %> <%- JSON.stringify(shop) %> <% } %>
+		</main>
+	</body>
+</html>
