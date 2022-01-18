@@ -4,7 +4,9 @@
 			<img class="card-img-top" src="../../public/image/min-star.png" />
 			<div class="card-body">
 				<h5 class="card-title"><%= name%></h5>
-				<p class="card-text"><%= categories %></p>
+				<p class="card-text">
+					<%= categories ? categories : '（カテゴリー不明）' %>
+				</p>
 				<p class="card-text">
 					<span
 						class="rate-star"

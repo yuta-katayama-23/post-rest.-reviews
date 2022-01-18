@@ -18,7 +18,7 @@ FROM
     tran_shop_category.category_id
   FROM
     (
-      SELECT * FROM tran_shop ORDER BY score DESC LIMIT ?
+      SELECT * FROM tran_shop ORDER BY score DESC LIMIT ?, ?
     ) as shop
   LEFT JOIN tran_shop_category ON shop.id = tran_shop_category.shop_id
 ) as shop_category

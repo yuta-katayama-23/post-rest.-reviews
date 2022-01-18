@@ -6,7 +6,7 @@
 		<%- include("../share/stylesheets.ejs") %>
 	</head>
 	<body>
-		<div class="d-flex flex-column h-100">
+		<div id="app" class="d-flex flex-column h-100">
 			<header><%- include("../share/navbar.ejs") %></header>
 			<main class="container">
 				<div class="row">
@@ -43,7 +43,51 @@
 
 					<div class="col-12">
 						<nav class="my-3">
-							<ul class="pagination justify-content-center"></ul>
+							<ul class="pagination justify-content-center">
+								<li :class="['page-item', diabledPrevious(currentPage)]">
+									<a
+										class="page-link"
+										:href="`/search?keyword=${keyword}&page=${currentPage - 1}`"
+										aria-label="Previous"
+									>
+										<span class="disabled" aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+
+								<template
+									v-for="pageCount of pagenation(pageCounts, currentPage)"
+								>
+									<li
+										class="page-item"
+										:key="pageCount"
+										v-if="currentPage !== pageCount"
+									>
+										<a
+											class="page-link"
+											:href="`/search?keyword=${keyword}&page=${pageCount}`"
+											v-if="Number.isInteger(pageCount)"
+										>
+											{{ pageCount }}
+										</a>
+										<span v-else class="page-link">・・・</span>
+									</li>
+									<li v-else :key="pageCount" class="page-item active">
+										<span class="page-link disabled">{{ pageCount }}</span>
+									</li>
+								</template>
+
+								<li
+									:class="['page-item', diabledNext(currentPage, pageCounts)]"
+								>
+									<a
+										class="page-link"
+										:href="`/search?keyword=${keyword}&page=${currentPage + 1}`"
+										aria-label="Next"
+									>
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							</ul>
 						</nav>
 					</div>
 				</div>
@@ -53,5 +97,51 @@
 			</footer>
 		</div>
 		<%- include("../share/javascripts.ejs") %>
+		<script>
+			new Vue({
+				el: '#app',
+				data: () => ({
+					keyword: '<%= keyword %>',
+					pageCounts: parseInt('<%= pagenation.max %>'),
+					currentPage: parseInt('<%= pagenation.current %>')
+				}),
+				computed: {
+					diabledPrevious: () => {
+						return (currentPage) => {
+							return currentPage - 1 > 0 ? '' : 'disabled';
+						};
+					},
+					diabledNext: () => {
+						return (currentPage, pageCounts) => {
+							return currentPage < pageCounts ? '' : 'disabled';
+						};
+					},
+					pagenation: () => {
+						return (pageCounts, currentPage) => {
+							const list = [];
+
+							let notYet = true;
+							for (let pageCount = 1; pageCount <= pageCounts; pageCount++) {
+								if (pageCount <= 3) {
+									list.push(pageCount);
+								} else if (pageCounts - 3 < pageCount) {
+									list.push(pageCount);
+								} else if (
+									currentPage - 2 < pageCount &&
+									pageCount < currentPage + 2
+								) {
+									list.push(pageCount);
+								} else if (notYet) {
+									list.push('・・・');
+									notYet = false;
+								}
+							}
+
+							return list;
+						};
+					}
+				}
+			});
+		</script>
 	</body>
 </html>

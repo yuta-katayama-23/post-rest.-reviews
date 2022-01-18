@@ -7,5 +7,6 @@
 		"database": "post-restaurant-reviews",
 		"connectionLimit": 10,
 		"queueLimit": 0
-	}
+	},
+	"app": { "max_search": 6 }
 }
