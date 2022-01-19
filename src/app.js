@@ -1,5 +1,6 @@
 import 'source-map-support/register';
 import express from 'express';
+// import 'express-async-errors';
 import appRoot from 'app-root-path';
 import favicon from 'serve-favicon';
 import moment from 'moment';
@@ -30,6 +31,26 @@ app.use(favicon(appRoot.resolve('src/public/favicon.ico')));
 app.use('/public', express.static(appRoot.resolve('src/public')));
 
 app.use(accessLogger());
+
+app.get('/test', async (req, res, next) => {
+	const { createTransaction } = req.app.locals;
+
+	const tran = createTransaction();
+	try {
+		await tran.begin();
+		await tran.executeQuery(
+			'UPDATE tran_shop SET score=? WHERE id=?',
+			[4.0, 1]
+		);
+		// throw new Error('Test Exceptions');
+		await tran.commit();
+		res.end('OK');
+	} catch (err) {
+		const rollbackErr = await tran.rollback();
+		if (rollbackErr) next(rollbackErr);
+		next(err);
+	}
+});
 
 app.use('/', router);
 app.use('/search', searchRouter);
