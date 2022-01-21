@@ -1,8 +1,8 @@
 import pool from './pool';
 
 export default class Transaction {
-	constructor(connection) {
-		this.connection = connection;
+	constructor() {
+		this.connection = null;
 	}
 
 	async begin() {
@@ -26,6 +26,7 @@ export default class Transaction {
 
 	/**
 	 * rollbackが失敗した場合でも、connectionは破棄する必要があるのでtry-catch
+	 * また、UnhandledPromiseRejectionWarning対策でrollbackのエラーがthrowされないようにする
 	 */
 	async rollback() {
 		try {
