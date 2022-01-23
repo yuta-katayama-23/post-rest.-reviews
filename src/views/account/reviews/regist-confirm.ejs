@@ -38,31 +38,26 @@
 						<label for="visit" class="col-sm-2 col-form-label">訪問日</label>
 						<div class="col-sm-10">
 							<input
-								type="date"
+								type="text"
+								readonly
 								class="form-control"
 								id="visit"
 								name="visit"
-								placeholder="yyyy/mm/dd"
-								value=""
+								value="<%= review.visit  ? moment(review.visit).format('YYYY/MM/DD') : '' %>"
 							/>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label for="score" class="col-sm-2 col-form-label">評価</label>
 						<div class="col-sm-10">
-							<select class="form-control" id="score" name="score">
-								<option>5.0</option>
-								<option>4.5</option>
-								<option>4.0</option>
-								<option>3.5</option>
-								<option selected>3.0</option>
-								<option>2.5</option>
-								<option>2.0</option>
-								<option>1.5</option>
-								<option>1.0</option>
-								<option>0.5</option>
-								<option>0.0</option>
-							</select>
+							<input
+								type="text"
+								readonly
+								class="form-control"
+								id="score"
+								name="score"
+								value="<%= review.score %>"
+							/>
 						</div>
 					</div>
 					<div class="row mb-3">
@@ -71,17 +66,22 @@
 						</label>
 						<div class="col-sm-10">
 							<textarea
+								readonly
 								class="form-control"
 								id="description"
 								name="description"
 								rows="5"
-							></textarea>
+							>
+<%= (review.description || '') %>
+</textarea
+							>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<div class="col-sm-2"></div>
 						<div class="col-sm-10">
-							<button type="submit" class="btn btn-primary">確認</button>
+							<button type="submit" class="btn btn-secondary">修正</button>
+							<button type="submit" class="btn btn-primary">登録</button>
 						</div>
 					</div>
 				</form>

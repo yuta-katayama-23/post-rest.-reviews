@@ -32,6 +32,8 @@ app.use('/public', express.static(appRoot.resolve('src/public')));
 
 app.use(accessLogger());
 
+app.use(express.urlencoded({ extended: true }));
+
 app.get('/test', async (req, res, next) => {
 	const { createTransaction } = req.app.locals;
 
