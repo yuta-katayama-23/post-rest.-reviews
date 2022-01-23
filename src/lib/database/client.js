@@ -6,9 +6,7 @@ export default (appOrigin) => {
 	const app = appOrigin;
 
 	app.locals.pool = pool;
-	app.locals.createTransaction = () => {
-		return new Transaction();
-	};
+	app.locals.createTransaction = () => new Transaction();
 	app.locals.fsSql = new SqlQueryLoader({
 		path: 'src/lib/database/sqls'
 	});
