@@ -1,12 +1,12 @@
 import 'source-map-support/register';
 import express from 'express';
-// import 'express-async-errors';
 import appRoot from 'app-root-path';
 import favicon from 'serve-favicon';
 import moment from 'moment';
 import router from './routes/index';
 import shopsRouter from './routes/shops';
 import searchRouter from './routes/search';
+import accountRouter from './routes/account';
 import { AppLogger } from './lib/logger/logger';
 import applicationLogger from './lib/logger/application-logger';
 import accessLogger from './lib/logger/access-logger';
@@ -52,9 +52,10 @@ app.get('/test', async (req, res, next) => {
 	}
 });
 
-app.use('/', router);
+app.use('/account', accountRouter);
 app.use('/search', searchRouter);
 app.use('/shops', shopsRouter);
+app.use('/', router);
 
 app.use(applicationLogger());
 

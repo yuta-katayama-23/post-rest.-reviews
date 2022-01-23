@@ -1,6 +1,6 @@
 SELECT
   *
 FROM
-  tran_shops
+  tran_shop
 WHERE
   id = ?

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<%- include("../../share/metadata.ejs") %>
+		<title>Document</title>
+		<%- include("../../share/stylesheets.ejs") %>
+	</head>
+
+	<body>
+		<div class="d-flex flex-column h-100">
+			<header><%- include("../../share/navbar.ejs") %></header>
+			<main class="container">
+				<div class="border-bottom my-5">
+					<h1>口コミの投稿</h1>
+				</div>
+
+				<form action="/account/reviews/regist/confirm" method="POST">
+					<div class="row mb-3">
+						<label for="shopName" class="col-sm-2 col-form-label">店舗</label>
+						<div class="col-sm-10">
+							<input
+								type="text"
+								readonly
+								class="form-control-plaintext"
+								id="shopName"
+								name="shopName"
+								value="<%= shopName %>"
+							/>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="visit" class="col-sm-2 col-form-label">訪問日</label>
+						<div class="col-sm-10">
+							<input
+								type="date"
+								class="form-control"
+								id="visit"
+								name="visit"
+								placeholder="yyyy/mm/dd"
+								value=""
+							/>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="score" class="col-sm-2 col-form-label">評価</label>
+						<div class="col-sm-10">
+							<select class="form-control" id="score" name="score">
+								<option>5.0</option>
+								<option>4.5</option>
+								<option>4.0</option>
+								<option>3.5</option>
+								<option selected>3.0</option>
+								<option>2.5</option>
+								<option>2.0</option>
+								<option>1.5</option>
+								<option>1.0</option>
+								<option>0.5</option>
+								<option>0.0</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<label for="description" class="col-sm-2 col-form-label">
+							本文
+						</label>
+						<div class="col-sm-10">
+							<textarea
+								class="form-control"
+								id="description"
+								name="description"
+								rows="5"
+							></textarea>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-sm-2"></div>
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-primary">確認</button>
+						</div>
+					</div>
+				</form>
+			</main>
+			<footer class="footer bg-light text-muted mt-auto">
+				<%- include("../../share/footer.ejs") %>
+			</footer>
+		</div>
+		<%- include("../../share/javascripts.ejs") %>
+	</body>
+</html>
