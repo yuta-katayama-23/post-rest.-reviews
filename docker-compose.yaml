@@ -7,7 +7,6 @@ services:
       MYSQL_ROOT_PASSWORD: ''
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
       TZ: 'Asia/Tokyo'
-    command: mysqld --character-set-server=utf8mb4
     volumes:
       - ./data/mysql:/var/lib/mysql
       - ./mysql/sql:/docker-entrypoint-initdb.d
