@@ -7,14 +7,14 @@
 	</head>
 
 	<body>
-		<div class="d-flex flex-column h-100">
+		<div id="app" class="d-flex flex-column h-100">
 			<header><%- include("../../share/navbar.ejs") %></header>
 			<main class="container">
 				<div class="border-bottom my-5">
 					<h1>口コミの投稿</h1>
 				</div>
 
-				<form action="/account/reviews/regist/confirm" method="POST">
+				<form ref="form">
 					<input
 						type="hidden"
 						id="shopId"
@@ -38,12 +38,12 @@
 						<label for="visit" class="col-sm-2 col-form-label">訪問日</label>
 						<div class="col-sm-10">
 							<input
-								type="text"
+								type="date"
 								readonly
 								class="form-control"
 								id="visit"
 								name="visit"
-								value="<%= review.visit  ? moment(review.visit).format('YYYY/MM/DD') : '' %>"
+								value="<%= review.visit  ? moment(review.visit).format('YYYY-MM-DD') : '' %>"
 							/>
 						</div>
 					</div>
@@ -80,8 +80,12 @@
 					<div class="row mb-3">
 						<div class="col-sm-2"></div>
 						<div class="col-sm-10">
-							<button type="submit" class="btn btn-secondary">修正</button>
-							<button type="submit" class="btn btn-primary">登録</button>
+							<button class="btn btn-secondary" @click.prevent="fix">
+								修正
+							</button>
+							<button class="btn btn-primary" @click.prevent="execute">
+								登録
+							</button>
 						</div>
 					</div>
 				</form>
@@ -91,5 +95,27 @@
 			</footer>
 		</div>
 		<%- include("../../share/javascripts.ejs") %>
+		<script>
+			new Vue({
+				el: '#app',
+				data: () => ({
+					shopId: parseInt('<%= shopId %>')
+				}),
+				methods: {
+					fix() {
+						this.$refs.form.action = `/account/reviews/regist/${this.shopId}`;
+						this.submit();
+					},
+					execute() {
+						this.$refs.form.action = `/account/reviews/regist/execute`;
+						this.submit();
+					},
+					submit() {
+						this.$refs.form.method = 'POST';
+						this.$refs.form.submit();
+					}
+				}
+			});
+		</script>
 	</body>
 </html>

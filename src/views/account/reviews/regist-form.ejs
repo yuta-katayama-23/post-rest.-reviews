@@ -7,7 +7,7 @@
 	</head>
 
 	<body>
-		<div class="d-flex flex-column h-100">
+		<div id="app" class="d-flex flex-column h-100">
 			<header><%- include("../../share/navbar.ejs") %></header>
 			<main class="container">
 				<div class="border-bottom my-5">
@@ -43,7 +43,7 @@
 								id="visit"
 								name="visit"
 								placeholder="yyyy/mm/dd"
-								value=""
+								value="<%= review.visit ? moment(review.visit).format('YYYY-MM-DD') : '' %>"
 							/>
 						</div>
 					</div>
@@ -51,17 +51,12 @@
 						<label for="score" class="col-sm-2 col-form-label">評価</label>
 						<div class="col-sm-10">
 							<select class="form-control" id="score" name="score">
-								<option>5.0</option>
-								<option>4.5</option>
-								<option>4.0</option>
-								<option>3.5</option>
-								<option selected>3.0</option>
-								<option>2.5</option>
-								<option>2.0</option>
-								<option>1.5</option>
-								<option>1.0</option>
-								<option>0.5</option>
-								<option>0.0</option>
+								<template v-for="score of scores">
+									<option :key="score.point" v-if="score.selected" selected>
+										{{ score.point }}
+									</option>
+									<option :key="score.point" v-else>{{ score.point }}</option>
+								</template>
 							</select>
 						</div>
 					</div>
@@ -75,7 +70,10 @@
 								id="description"
 								name="description"
 								rows="5"
-							></textarea>
+							>
+<%= review.description %>
+</textarea
+							>
 						</div>
 					</div>
 					<div class="row mb-3">
@@ -92,4 +90,34 @@
 		</div>
 		<%- include("../../share/javascripts.ejs") %>
 	</body>
+	<script>
+		new Vue({
+			el: '#app',
+			data: () => ({
+				scores: [
+					{ point: '5.0', selected: false },
+					{ point: '4.5', selected: false },
+					{ point: '4.0', selected: false },
+					{ point: '3.5', selected: false },
+					{ point: '3.0', selected: true },
+					{ point: '2.5', selected: false },
+					{ point: '2.0', selected: false },
+					{ point: '1.5', selected: false },
+					{ point: '1.0', selected: false },
+					{ point: '0.5', selected: false },
+					{ point: '0.0', selected: false }
+				],
+				score: parseFloat('<%= review.score %>')
+			}),
+			created() {
+				if (this.score) {
+					this.scores = this.scores.map((score) => {
+						if (parseFloat(score.point) === this.score)
+							return { point: score.point, selected: true };
+						return { point: score.point, selected: false };
+					});
+				}
+			}
+		});
+	</script>
 </html>
