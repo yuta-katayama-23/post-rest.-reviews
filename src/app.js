@@ -34,26 +34,6 @@ app.use(accessLogger());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/test', async (req, res, next) => {
-	const { createTransaction } = req.app.locals;
-
-	const tran = createTransaction();
-	try {
-		await tran.begin();
-		await tran.executeQuery(
-			'UPDATE tran_shop SET score=? WHERE id=?',
-			[4.0, 1]
-		);
-		// throw new Error('Test Exceptions');
-		await tran.commit();
-		res.end('OK');
-	} catch (err) {
-		const rollbackErr = await tran.rollback();
-		if (rollbackErr) next(rollbackErr);
-		next(err);
-	}
-});
-
 app.use('/account', accountRouter);
 app.use('/search', searchRouter);
 app.use('/shops', shopsRouter);
