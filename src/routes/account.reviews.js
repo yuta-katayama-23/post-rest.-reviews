@@ -18,6 +18,19 @@ const createReviewData = (req) => {
 	return review;
 };
 
+const validate = (req) => {
+	const { visit, description } = req.body;
+	const error = {};
+
+	if (!visit) error.visit = '訪問日は必須です。';
+	else if (moment(visit, DATE_FORMAT).isAfter(moment(new Date())))
+		error.visit = '訪問日を未来の日付にする事はできません。';
+
+	if (!description) error.description = '本文は必須です。';
+
+	return error;
+};
+
 router.get('/regist/:shopId(\\d+)', async (req, res, next) => {
 	const { pool, fsSql } = req.app.locals;
 	const { shopId } = req.params;
@@ -41,8 +54,18 @@ router.get('/regist/:shopId(\\d+)', async (req, res, next) => {
 });
 
 router.post('/regist/confirm', async (req, res) => {
+	const error = validate(req);
 	const { shopId, shopName } = req.body;
 	const review = createReviewData(req);
+
+	if (Object.keys(error).length !== 0) {
+		res.render('./account/reviews/regist-form.ejs', {
+			error,
+			shopId,
+			shopName,
+			review
+		});
+	}
 
 	res.render('./account/reviews/regist-confirm.ejs', {
 		shopId,
