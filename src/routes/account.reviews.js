@@ -53,6 +53,13 @@ router.get('/regist/:shopId(\\d+)', async (req, res, next) => {
 	}
 });
 
+router.post('/regist/:shopId(\\d+)', async (req, res) => {
+	const { shopId, shopName } = req.body;
+	const review = createReviewData(req);
+
+	res.render('./account/reviews/regist-form.ejs', { shopId, shopName, review });
+});
+
 router.post('/regist/confirm', async (req, res) => {
 	const error = validate(req);
 	const { shopId, shopName } = req.body;
@@ -74,11 +81,46 @@ router.post('/regist/confirm', async (req, res) => {
 	});
 });
 
-router.post('/regist/:shopId(\\d+)', async (req, res) => {
+router.post('/regist/execute', async (req, res, next) => {
+	const { createTransaction, fsSql } = req.app.locals;
+
+	const error = validate(req);
 	const { shopId, shopName } = req.body;
 	const review = createReviewData(req);
+	const userId = 1; // FIXME
 
-	res.render('./account/reviews/regist-form.ejs', { shopId, shopName, review });
+	if (Object.keys(error).length !== 0) {
+		res.render('./account/reviews/regist-form.ejs', {
+			error,
+			shopId,
+			shopName,
+			review
+		});
+	}
+
+	const tran = createTransaction();
+	try {
+		await tran.begin();
+		await tran.executeQuery(
+			fsSql.readSync('tran_shops', 'SELECT_SHOP_BY_ID_FOR_UPDATE'),
+			[shopId]
+		);
+		await tran.executeQuery(
+			fsSql.readSync('tran_shops', 'INSERT_SHOP_REVIEW'),
+			[shopId, userId, review.score, review.visit, review.description]
+		);
+		await tran.executeQuery(
+			fsSql.readSync('tran_shops', 'UPDATE_SHOP_SCORE_BY_ID'),
+			[shopId, shopId]
+		);
+		await tran.commit();
+	} catch (err) {
+		const rollbackErr = await tran.rollback();
+		if (rollbackErr) next(rollbackErr);
+		next(err);
+	}
+
+	res.render('./account/reviews/regist-complete.ejs', { shopId });
 });
 
 export default router;
