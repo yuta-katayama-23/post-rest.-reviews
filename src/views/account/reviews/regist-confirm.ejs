@@ -78,6 +78,18 @@
 						</div>
 					</div>
 					<div class="row mb-3">
+						<label for="description" class="col-sm-2 col-form-label">
+							XXS攻撃を受けるパターン
+						</label>
+						<div class="col-sm-10"><%- review.description %></div>
+					</div>
+					<div class="row mb-3">
+						<label for="description" class="col-sm-2 col-form-label">
+							XXS攻撃を受けないパターン
+						</label>
+						<div class="col-sm-10"><%= review.description %></div>
+					</div>
+					<div class="row mb-3">
 						<div class="col-sm-2"></div>
 						<div class="col-sm-10">
 							<button class="btn btn-secondary" @click.prevent="fix">
