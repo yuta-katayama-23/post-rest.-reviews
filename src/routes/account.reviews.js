@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import moment from 'moment';
+import { isHttpUri, isHttpsUri } from 'valid-url';
 
 const router = Router();
 const DATE_FORMAT = 'YYYY/MM/DD';
@@ -19,7 +20,7 @@ const createReviewData = (req) => {
 };
 
 const validate = (req) => {
-	const { visit, description } = req.body;
+	const { visit, description, url } = req.body;
 	const error = {};
 
 	if (!visit) error.visit = '訪問日は必須です。';
@@ -27,6 +28,8 @@ const validate = (req) => {
 		error.visit = '訪問日を未来の日付にする事はできません。';
 
 	if (!description) error.description = '本文は必須です。';
+
+	if (!isHttpUri(url) && !isHttpsUri(url)) error.url = 'URLが不正です。';
 
 	return error;
 };
@@ -43,10 +46,12 @@ router.get('/regist/:shopId(\\d+)', async (req, res, next) => {
 		const shop = results.shift() || {};
 		const shopName = shop.name;
 		const review = {};
+		const url = '';
 		res.render('./account/reviews/regist-form.ejs', {
 			shopId,
 			shopName,
-			review
+			review,
+			url
 		});
 	} catch (err) {
 		next(err);
@@ -54,15 +59,20 @@ router.get('/regist/:shopId(\\d+)', async (req, res, next) => {
 });
 
 router.post('/regist/:shopId(\\d+)', async (req, res) => {
-	const { shopId, shopName } = req.body;
+	const { shopId, shopName, url } = req.body;
 	const review = createReviewData(req);
 
-	res.render('./account/reviews/regist-form.ejs', { shopId, shopName, review });
+	res.render('./account/reviews/regist-form.ejs', {
+		shopId,
+		shopName,
+		review,
+		url
+	});
 });
 
 router.post('/regist/confirm', async (req, res) => {
 	const error = validate(req);
-	const { shopId, shopName } = req.body;
+	const { shopId, shopName, url } = req.body;
 	const review = createReviewData(req);
 
 	if (Object.keys(error).length !== 0) {
@@ -70,14 +80,16 @@ router.post('/regist/confirm', async (req, res) => {
 			error,
 			shopId,
 			shopName,
-			review
+			review,
+			url
 		});
 	}
 
 	res.render('./account/reviews/regist-confirm.ejs', {
 		shopId,
 		shopName,
-		review
+		review,
+		url
 	});
 });
 
