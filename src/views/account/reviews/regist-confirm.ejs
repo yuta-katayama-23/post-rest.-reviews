@@ -75,7 +75,6 @@
 <%= (review.description || '') %>
 </textarea
 							>
-							<div id="text-counter"></div>
 						</div>
 					</div>
 					<div class="row mb-3">
@@ -96,11 +95,6 @@
 			</footer>
 		</div>
 		<%- include("../../share/javascripts.ejs") %>
-		<script>
-			var div = document.getElementById('text-counter');
-			var txt = "<%- (review.description || '') %>";
-			div.textContent = `${txt}の文字数は${txt.length}文字です`;
-		</script>
 		<script>
 			new Vue({
 				el: '#app',
