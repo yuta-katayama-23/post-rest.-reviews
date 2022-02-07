@@ -1,5 +1,6 @@
 import 'source-map-support/register';
 import express from 'express';
+import * as helmet from 'helmet';
 import cookie from 'cookie-parser';
 import appRoot from 'app-root-path';
 import favicon from 'serve-favicon';
@@ -19,7 +20,34 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', appRoot.resolve('src/views'));
-app.disable('x-powered-by');
+
+app.use(helmet.hidePoweredBy());
+app.use(helmet.xssFilter());
+app.use(
+	helmet.contentSecurityPolicy({
+		useDefaults: false,
+		directives: {
+			'default-src': ["'self'"],
+			'base-uri': ["'self'"],
+			// 'block-all-mixed-content': [], <- MDNによると非推奨なのでコメントアウト
+			'font-src': ["'self'", 'https:', 'data:', 'https://use.fontawesome.com'], // <- fontを読み込めるように追記
+			'form-action': ["'self'"],
+			'frame-ancestors': ["'self'"],
+			'img-src': ["'self'", 'data:'],
+			'object-src': ["'none'"],
+			'script-src': ["'self'", 'https://cdn.jsdelivr.net/npm/'], // <- JSを読み込めるように追記
+			'script-src-attr': ["'none'"],
+			'style-src': [
+				"'self'",
+				'https:',
+				"'unsafe-inline'",
+				'https://cdn.jsdelivr.net',
+				'https://use.fontawesome.com' // <- cssを読み込めるように追記
+			]
+			// 'upgrade-insecure-requests': [], <- HTTPでコンテンツ取得したいのでコメントアウト
+		}
+	})
+);
 
 mysqlClient(app);
 app.use((req, res, next) => {
@@ -41,7 +69,7 @@ app.use((req, res, next) => {
 	} = req;
 
 	console.log(message);
-	res.cookie('message', 'hello world!');
+	res.cookie('message', 'hello world!', { httpOnly: true });
 
 	next();
 });
