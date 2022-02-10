@@ -8,5 +8,12 @@
 		"connectionLimit": 10,
 		"queueLimit": 0
 	},
+	"redis": {
+		"session": {
+			"name": "prr.sid",
+			"resave": false,
+			"saveUninitialized": false
+		}
+	},
 	"app": { "max_search": 6 }
 }
