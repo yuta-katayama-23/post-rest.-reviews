@@ -56,7 +56,9 @@ app.use(
 			'object-src': ["'none'"],
 			'script-src': [
 				"'self'",
-				'https://cdn.jsdelivr.net/npm/' // <- JSを読み込めるように追記
+				'https://cdn.jsdelivr.net/npm/', // <- JSを読み込めるように追記
+				"'sha256-xVbLiF291eODYUjoJPH8GkxUoXzgyLSCbfdckFsRPMM='", // <- inline scriptの有効化
+				"'unsafe-eval'" // <- Vue.js用
 			],
 			'script-src-attr': ["'none'"],
 			'style-src': [
@@ -83,22 +85,6 @@ app.use('/public', express.static(appRoot.resolve('src/public')));
 
 app.use(accessLogger());
 app.use(express.urlencoded({ extended: true }));
-app.use((req, res, next) => {
-	const {
-		session,
-		query: { login }
-	} = req;
-
-	if (session.id && !session.login)
-		console.log('初回 セッション（Cookie未保存）', session.id);
-	if (session.login) console.log('login is ', session.login, session.id);
-
-	if (login) {
-		console.log('login処理 や Cookieへの同意');
-		session.login = 'logined';
-	}
-	next();
-});
 
 app.use('/account', accountRouter);
 app.use('/search', searchRouter);
