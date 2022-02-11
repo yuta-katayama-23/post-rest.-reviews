@@ -22,7 +22,7 @@ import accessLogger from './lib/logger/access-logger';
 import mysqlClient from './lib/database/client';
 import { padding } from './lib/math/math';
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 const app = express();
 
 app.set('view engine', 'ejs');
@@ -54,7 +54,10 @@ app.use(
 			'frame-ancestors': ["'self'"],
 			'img-src': ["'self'", 'data:'],
 			'object-src': ["'none'"],
-			'script-src': ["'self'", 'https://cdn.jsdelivr.net/npm/'], // <- JSを読み込めるように追記
+			'script-src': [
+				"'self'",
+				'https://cdn.jsdelivr.net/npm/' // <- JSを読み込めるように追記
+			],
 			'script-src-attr': ["'none'"],
 			'style-src': [
 				"'self'",
@@ -79,7 +82,6 @@ app.use(favicon(appRoot.resolve('src/public/favicon.ico')));
 app.use('/public', express.static(appRoot.resolve('src/public')));
 
 app.use(accessLogger());
-
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
 	const {
