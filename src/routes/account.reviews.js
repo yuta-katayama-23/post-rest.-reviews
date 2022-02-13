@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import moment from 'moment';
+import validateReq from '../lib/validate-req';
 
 const router = Router();
 const DATE_FORMAT = 'YYYY/MM/DD';
@@ -31,7 +32,7 @@ const validate = (req) => {
 	return error;
 };
 
-router.get('/regist/:shopId(\\d+)', async (req, res, next) => {
+router.get('/regist/:shopId(\\d+)', validateReq(), async (req, res, next) => {
 	const { pool, fsSql } = req.app.locals;
 	const { shopId } = req.params;
 
@@ -53,7 +54,7 @@ router.get('/regist/:shopId(\\d+)', async (req, res, next) => {
 	}
 });
 
-router.post('/regist/:shopId(\\d+)', async (req, res) => {
+router.post('/regist/:shopId(\\d+)', validateReq(), async (req, res) => {
 	const { shopId, shopName } = req.body;
 	const review = createReviewData(req);
 
@@ -64,7 +65,7 @@ router.post('/regist/:shopId(\\d+)', async (req, res) => {
 	});
 });
 
-router.post('/regist/confirm', async (req, res) => {
+router.post('/regist/confirm', validateReq(), async (req, res) => {
 	const error = validate(req);
 	const { shopId, shopName } = req.body;
 	const review = createReviewData(req);
@@ -85,7 +86,7 @@ router.post('/regist/confirm', async (req, res) => {
 	});
 });
 
-router.post('/regist/execute', async (req, res, next) => {
+router.post('/regist/execute', validateReq(), async (req, res, next) => {
 	const { createTransaction, fsSql } = req.app.locals;
 
 	const error = validate(req);

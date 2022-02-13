@@ -58,6 +58,7 @@ app.use(
 				"'self'",
 				'https://cdn.jsdelivr.net/npm/', // <- JSを読み込めるように追記
 				"'sha256-xVbLiF291eODYUjoJPH8GkxUoXzgyLSCbfdckFsRPMM='", // <- inline scriptの有効化
+				"'sha256-KCLOeSOoMB4DteESsFvnZ+mjsKAZvAbDJrprfuukM4A='",
 				"'unsafe-eval'" // <- Vue.js用
 			],
 			'script-src-attr': ["'none'"],

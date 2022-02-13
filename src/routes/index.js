@@ -3,6 +3,8 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/', (req, res) => {
+	const { session } = req;
+	session.login = true; // FIXME
 	res.render('./index.ejs');
 });
 

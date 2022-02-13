@@ -12,7 +12,10 @@
 		"session": {
 			"name": "prr.sid",
 			"resave": false,
-			"saveUninitialized": false
+			"saveUninitialized": false,
+			"cookie": {
+				"sameSite": false
+			}
 		}
 	},
 	"app": { "max_search": 6 }
