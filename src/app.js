@@ -5,6 +5,7 @@ import appRoot from 'app-root-path';
 import favicon from 'serve-favicon';
 import moment from 'moment';
 import config from 'config';
+import Tokens from 'csrf';
 
 import expressSession from 'express-session';
 import connectRedis from 'connect-redis';
@@ -57,8 +58,7 @@ app.use(
 			'script-src': [
 				"'self'",
 				'https://cdn.jsdelivr.net/npm/', // <- JSを読み込めるように追記
-				"'sha256-xVbLiF291eODYUjoJPH8GkxUoXzgyLSCbfdckFsRPMM='", // <- inline scriptの有効化
-				"'sha256-KCLOeSOoMB4DteESsFvnZ+mjsKAZvAbDJrprfuukM4A='",
+				"'unsafe-inline'", // <- inline scriptの有効化
 				"'unsafe-eval'" // <- Vue.js用
 			],
 			'script-src-attr': ["'none'"],
@@ -75,6 +75,7 @@ app.use(
 );
 
 mysqlClient(app);
+app.locals.tokens = new Tokens();
 app.use((req, res, next) => {
 	res.locals.moment = moment;
 	res.locals.padding = padding;
