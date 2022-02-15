@@ -90,9 +90,14 @@
 							<button class="btn btn-secondary" @click.prevent="fix">
 								修正
 							</button>
-							<button class="btn btn-primary" @click.prevent="execute">
+							<button
+								v-if="!disabled"
+								class="btn btn-primary"
+								@click.prevent="execute"
+							>
 								登録
 							</button>
+							<button v-else class="btn btn-primary" disabled>登録</button>
 						</div>
 					</div>
 					<div
@@ -112,7 +117,8 @@
 			new Vue({
 				el: '#app',
 				data: () => ({
-					shopId: parseInt('<%= shopId %>')
+					shopId: parseInt('<%= shopId %>'),
+					disabled: false
 				}),
 				methods: {
 					fix() {
@@ -120,6 +126,7 @@
 						this.$refs.form.submit();
 					},
 					execute() {
+						this.disabled = true;
 						this.$refs.form.action = `/account/reviews/regist/execute`;
 						grecaptcha.execute();
 					}
