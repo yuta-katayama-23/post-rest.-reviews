@@ -28,5 +28,15 @@
 			</footer>
 		</div>
 		<%- include("../../share/javascripts.ejs") %>
+		<script>
+			// 以下Chromeでは、完了画面に遷移後直にブラウザバックをされると動作しない
+			// https://11-30am.com/27/（https://www.zdnet.com/article/google-working-on-blocking-back-button-hijacking-in-chrome/）
+			document.addEventListener('DOMContentLoaded', () => {
+				history.pushState(null, null, null);
+				window.onpopstate = (event) => {
+					history.pushState(null, null, null);
+				};
+			});
+		</script>
 	</body>
 </html>
