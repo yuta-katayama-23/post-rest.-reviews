@@ -7,6 +7,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"app-root-path": "^3.0.0",
+		"axios": "^0.26.0",
 		"config": "^3.3.6",
 		"connect-redis": "^6.1.1",
 		"csrf": "^3.1.0",

@@ -18,5 +18,6 @@
 			}
 		}
 	},
-	"app": { "max_search": 6 }
+	"app": { "max_search": 6 },
+	"reCaptchaVerify": "https://www.google.com/recaptcha/api/siteverify"
 }

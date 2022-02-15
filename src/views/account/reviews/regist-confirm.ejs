@@ -4,6 +4,12 @@
 		<%- include("../../share/metadata.ejs") %>
 		<title>Document</title>
 		<%- include("../../share/stylesheets.ejs") %>
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+		<script>
+			function onSubmit(token) {
+				document.getElementById('form').submit();
+			}
+		</script>
 	</head>
 
 	<body>
@@ -14,7 +20,7 @@
 					<h1>口コミの投稿</h1>
 				</div>
 
-				<form ref="form">
+				<form id="form" ref="form" method="POST">
 					<input type="hidden" id="token" name="token" value="<%= token %>" />
 					<input
 						type="hidden"
@@ -89,6 +95,12 @@
 							</button>
 						</div>
 					</div>
+					<div
+						class="g-recaptcha"
+						data-sitekey="6Lc953seAAAAADfQ-LUYUALPaPmJn2EXq9WmqrPN"
+						data-callback="onSubmit"
+						data-size="invisible"
+					></div>
 				</form>
 			</main>
 			<footer class="footer bg-light text-muted mt-auto">
@@ -105,15 +117,11 @@
 				methods: {
 					fix() {
 						this.$refs.form.action = `/account/reviews/regist/${this.shopId}`;
-						this.submit();
+						this.$refs.form.submit();
 					},
 					execute() {
 						this.$refs.form.action = `/account/reviews/regist/execute`;
-						this.submit();
-					},
-					submit() {
-						this.$refs.form.method = 'POST';
-						this.$refs.form.submit();
+						grecaptcha.execute();
 					}
 				}
 			});

@@ -53,11 +53,14 @@ app.use(
 			'font-src': ["'self'", 'https:', 'data:', 'https://use.fontawesome.com'], // <- fontを読み込めるように追記
 			'form-action': ["'self'"],
 			'frame-ancestors': ["'self'"],
+			'frame-src': ['https://www.google.com/'],
 			'img-src': ["'self'", 'data:'],
 			'object-src': ["'none'"],
 			'script-src': [
 				"'self'",
-				'https://cdn.jsdelivr.net/npm/', // <- JSを読み込めるように追記
+				'https://cdn.jsdelivr.net/npm/',
+				'https://www.google.com/',
+				'https://www.gstatic.com/', // <- JSを読み込めるように追記
 				"'unsafe-inline'", // <- inline scriptの有効化
 				"'unsafe-eval'" // <- Vue.js用
 			],
