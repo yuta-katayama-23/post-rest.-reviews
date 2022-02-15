@@ -143,8 +143,13 @@ router.post(
 			next(err);
 		}
 
-		res.render('./account/reviews/regist-complete.ejs', { shopId });
+		res.redirect(`/account/reviews/regist/complete?shopId=${shopId}`);
 	}
 );
+
+router.get('/regist/complete', (req, res) => {
+	const { shopId } = req.query;
+	res.render('./account/reviews/regist-complete.ejs', { shopId });
+});
 
 export default router;
